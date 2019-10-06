@@ -16,7 +16,18 @@
   <body>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-8">
+          <div class="jumbotron mb-0">
+            <h1 class="display-4">GDIndex Code Builder</h1>
+            <p class="lead">
+              This is a simple website to help you get started with
+              <a href="https://github.com/maple3142/GDIndex" target="_blank">GDIndex</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">1. Get Authorization Code</h5>
@@ -35,7 +46,7 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-8">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">2. Fill the form</h5>
@@ -102,18 +113,22 @@
         </div>
       </div>
       <div class="row justify-content-center" id="result" style="display:none;">
-        <div class="col-md-4">
+        <div class="col-md-8">
           <div class="card" id="success" style="display:none;">
             <div class="card-body">
               <h5 class="card-title">3. Finished</h5>
               <p class="card-text">
-                Copy the following code and go to CloudFlare Workers to paste
+                Copy the following code and go to <a href="https://workers.cloudflare.com/">CloudFlare Workers</a> to paste
                 the code.
               </p>
-              <textarea id="code"></textarea>
               <button class="btn btn-primary" data-clipboard-target="#code">
                 Copy the code to clipboard
               </button>
+              <textarea
+                class="form-control mt-2"
+                id="code"
+                rows="100"
+              ></textarea>
             </div>
           </div>
           <div class="card" id="failed" style="display:none;">
@@ -126,13 +141,14 @@
       </div>
     </div>
     <script>
+      new ClipboardJS(".btn");
       form.onsubmit = e => {
         e.preventDefault();
         fetch(form.action, {
           method: form.method,
           body: new URLSearchParams(new FormData(form))
         }).then(r => {
-          if (r.code !== 200) {
+          if (!r.ok) {
             result.style.display = "flex";
             failed.style.display = "flex";
             success.style.display = "none";
