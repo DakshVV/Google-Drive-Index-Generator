@@ -3,7 +3,11 @@ const bodyParser = require("body-parser");
 const xf = require("xfetch-js");
 
 const app = express();
-app.use(bodyParser.urlencoded());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
@@ -14,8 +18,7 @@ function replace(t, a, b) {
 }
 app.post("/getcode", async (req, res) => {
   const p = req.body;
-  console.log(p)
-  const { refresh_token } = await xf
+  const r = await xf
     .post("https://www.googleapis.com/oauth2/v4/token", {
       urlencoded: {
         code: p.auth_code,
@@ -25,16 +28,28 @@ app.post("/getcode", async (req, res) => {
         grant_type: "authorization_code"
       }
     })
-    .json();
+    .json()
+    .catch(e => null);
+  if (r === null) {
+    return r
+      .status(400)
+      .send(
+        "Authorization Code is invalid. Perhaps it doesn's exists or it has been used for 1 time."
+      );
+  }
   let code = await xf
     .get(
       "https://raw.githubusercontent.com/maple3142/GDIndex/master/worker/dist/worker.js"
     )
     .text();
-  code = replace("refresh_token", refresh_token);
+  code = replace(code, "refresh_token", r.refresh_token);
   for (const [k, v] of Object.entries(p)) {
     code = replace(code, k, v);
   }
+  if (p.enable_basic_auth) {
+    code = code.replace("enable_basic_auth: false", "enable_basic_auth: true");
+  }
+  res.set("Content-Type", "text/javascript; charset=utf-8");
   res.send(code);
 });
 app.listen(process.env.PORT);
