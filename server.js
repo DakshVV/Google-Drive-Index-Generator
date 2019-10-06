@@ -31,7 +31,7 @@ app.post("/getcode", async (req, res) => {
     .json()
     .catch(e => null);
   if (r === null) {
-    return r
+    return res
       .status(400)
       .send(
         "Authorization Code is invalid. Perhaps it doesn's exists or it has been used for 1 time."
