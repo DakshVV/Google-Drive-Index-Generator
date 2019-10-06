@@ -15,7 +15,40 @@
             <div class="card-body">
               <h5 class="card-title">1. Get Authorization Code</h5>
               <p class="card-text">Click the following link and authorize, then copy the code you get.</p>
-              <a class="btn btn-primary" href="https://accounts.google.com/o/oauth2/auth?client_id=202264815644.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&approval_prompt=auto">Click me</a>
+              <a class="btn btn-primary" target="_blank" href="https://accounts.google.com/o/oauth2/auth?client_id=202264815644.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&approval_prompt=auto">Click me</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">2. Fill the form</h5>
+              <form action="/getcode" method="POST">
+                <div class="form-group">
+                  <label for="auth_code">Authorization Code</label>
+                  <input type="text" class="form-control" id="auth_code" name="auth_code">
+                </div>
+                <div class="form-group">
+                  <label for="default_root_id">Default Root ID</label>
+                  <input type="text" class="form-control" id="default_root_id" name="default_root_id" value="root">
+                  <small class="form-text text-muted">If you don't know what is this, just leave it alone.</small>
+                </div>
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" name="basic_auth" id="basic_auth">
+                  <label class="form-check-label" for="basic_auth">Enable authentication</label>
+                </div>
+                <div class="form-group">
+                  <label for="user">Username (require authentication to work)</label>
+                  <input type="text" class="form-control" id="user" name="user">
+                </div>
+                <div class="form-group">
+                  <label for="pass">Password (require authentication to work)</label>
+                  <input type="password" class="form-control" id="pass" name="pass">
+                </div>
+                <button type="submit" class="btn btn-primary">Get Code</button>
+              </form>
             </div>
           </div>
         </div>

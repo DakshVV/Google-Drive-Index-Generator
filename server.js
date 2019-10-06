@@ -1,10 +1,10 @@
-const express = require("express")
+const express = require('express')
 const app = express()
 
-app.get("/", (req,res)=>{
-  res.sendFile(__dirname + "/views/index.html")
+app.get('/', (req,res)=>{
+  res.sendFile(__dirname + '/views/index.html')
 })
-app.get('/auth',(req,res)=>{
+app.get('/getcode',(req,res)=>{
   console.log(req)
 })
 app.listen(process.env.PORT)
