@@ -49,6 +49,9 @@ app.post("/getcode", async (req, res) => {
   if (p.enable_basic_auth) {
     code = code.replace("enable_basic_auth: false", "enable_basic_auth: true");
   }
+  if (p.upload) {
+    code = code.replace("upload: false", "upload: true");
+  }
   res.set("Content-Type", "text/javascript; charset=utf-8");
   res.send(code);
 });
