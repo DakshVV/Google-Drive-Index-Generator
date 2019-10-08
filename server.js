@@ -46,8 +46,8 @@ app.post("/getcode", async (req, res) => {
   for (const [k, v] of Object.entries(p)) {
     code = replace(code, k, v);
   }
-  if (p.enable_basic_auth) {
-    code = code.replace("enable_basic_auth: false", "enable_basic_auth: true");
+  if (p.auth) {
+    code = code.replace("auth: false", "auth: true");
   }
   if (p.upload) {
     code = code.replace("upload: false", "upload: true");
